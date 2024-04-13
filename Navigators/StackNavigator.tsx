@@ -5,6 +5,8 @@ import RestaurantScreen from '../Screens/RestaurantScreen';
 import BasketScreen from '../Screens/BasketScreen';
 import PreaparingOrderScreen from '../Screens/PreaparingOrderScreen';
 import DeliveryScreen from '../Screens/DeliveryScreen';
+import OrderScreen from '../Screens/OrderScreen';
+import ProfileScreen from '../Screens/ProfileScreen';
 
 
 
@@ -22,6 +24,12 @@ const StackNavigator = () => {
           options={{presentation: "fullScreenModal", headerShown:false}}
         />
           <Stack.Screen name="Delivery" component={DeliveryScreen} 
+            options={{presentation: "fullScreenModal", headerShown:false}}
+          />
+          <Stack.Screen name="Order" component={OrderScreen} 
+            options={{presentation: "fullScreenModal", headerShown:false}}
+          />
+          <Stack.Screen name="Profile" component={ProfileScreen} 
             options={{presentation: "fullScreenModal", headerShown:false}}
           />
     </Stack.Navigator>
