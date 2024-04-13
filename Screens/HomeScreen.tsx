@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react'
 import { View, Text, Platform, StatusBar, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Feather, FontAwesome5, FontAwesome6, Entypo, AntDesign, Ionicons } from '@expo/vector-icons'
+import { Feather, FontAwesome5, FontAwesome6, FontAwesome, Entypo, AntDesign, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 
@@ -110,7 +110,14 @@ const HomeScreen = ({ navigation }: any) => {
             <Entypo name="chevron-down" size={20} color="#00cc88" />             
            </Text>
           </View>
-            <FontAwesome5 name="user" size={25} color="#00cc88" />             
+          <View className='flex flex-row px-1 space-x-4 items-center'>
+            <TouchableOpacity className='items-center' onPress={() => navigation.navigate('Order')}>
+              <Feather name='shopping-cart' size={25} color="#00cc88" />           
+            </TouchableOpacity>
+            <TouchableOpacity className='items-center' onPress={() => navigation.navigate('Profile')}>
+              <FontAwesome name="user-circle-o" size={25} color="#00cc88" />  
+            </TouchableOpacity>
+          </View>
 
         
         </View>
