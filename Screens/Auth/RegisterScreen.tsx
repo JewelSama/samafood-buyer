@@ -14,18 +14,19 @@ const RegisterScreen = ( {navigation}: any ) => {
         <Text className="text-3xl" style={{fontFamily: 'Bold'}}>Set up your account</Text>
         <Text className="text-slate-500 text-base" style={{fontFamily: 'SemiBold'}}>Set up your account to begin deliveries</Text>
       </View>
-      <ScrollView className="mt-7 space-y-3 h-full bg-red-30" showsVerticalScrollIndicator automaticallyAdjustKeyboardInsets  contentContainerStyle={{paddingBottom: 60}}>
+      <ScrollView className="mt-7 space-y-3 h-full bg-red-30" showsVerticalScrollIndicator={false} automaticallyAdjustKeyboardInsets  contentContainerStyle={{paddingBottom: 60}}>
         <>
+
         <View className="space-y-1">
-          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Phone Number</Text>
+          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Username</Text>
           <View className='border-zinc-300 border h-14 rounded-md flex flex-row items-center'>
             <TextInput
               className=" px-3 bg-gray-40 font-semibold w-full h-full"
-              placeholder='Enter phone number'
+              placeholder='Enter username'
               textAlignVertical='center'
               selectionColor='#FFAB48'
-			  textContentType='telephoneNumber'
-			  keyboardType='numeric'
+			        // textContentType='al'
+			        keyboardType='numeric'
               // caretHidden={loading}
               placeholderTextColor="rgb(148, 163, 184)"
               style={{fontFamily: 'Regular'}}
@@ -35,13 +36,16 @@ const RegisterScreen = ( {navigation}: any ) => {
             />
           </View>
         </View>
+
       <View className="space-y-1">
-          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Home Address</Text>
+          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Email Address</Text>
           <TextInput
             className="border-zinc-300 px-3 bg-gray-40 font-semibold w-full h-14 border rounded-md"
-            placeholder='Enter home address'
+            placeholder='Enter email address'
             textAlignVertical='center'
             selectionColor='#FFAB48'
+            textContentType='emailAddress'
+			      keyboardType='email-address'
             // caretHidden={loading}
             placeholderTextColor="rgb(148, 163, 184)"
             style={{fontFamily: 'Regular'}}
@@ -50,38 +54,40 @@ const RegisterScreen = ( {navigation}: any ) => {
             // onChangeText={setUsername}
             />
         </View>
-      <View className="space-y-1">
-          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Last Name</Text>
-          <TextInput
-            className="border-zinc-300 px-3 bg-gray-40 font-semibold w-full h-14 border rounded-md"
-            placeholder='Enter last name'
-            textAlignVertical='center'
-            selectionColor='#FFAB48'
-            // caretHidden={loading}
-            placeholderTextColor="rgb(148, 163, 184)"
-            style={{fontFamily: 'Regular'}}
-            // editable={!loading}
-            // value={username}
-            // onChangeText={setUsername}
-            />
-        </View>
+
         <View className="space-y-1">
-          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Vehicle Plate Number</Text>
+          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Phone Number</Text>
           <TextInput
             className="border-zinc-300 px-3 bg-gray-40 font-semibold w-full h-14 border rounded-md"
-            placeholder='Enter vehicle plate number'
+            placeholder='Enter phone number'
             textAlignVertical='center'
             selectionColor='#FFAB48'
             // caretHidden={loading}
             placeholderTextColor="rgb(148, 163, 184)"
             style={{fontFamily: 'Regular'}}
-			textContentType='emailAddress'
-			keyboardType='email-address'
+            // keyboardType='phon'
             // editable={!loading}
             // value={username}
             // onChangeText={setUsername}
             />
         </View>
+
+      <View className="space-y-1">
+          <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Address</Text>
+          <TextInput
+            className="border-zinc-300 px-3 bg-gray-40 font-semibold w-full h-14 border rounded-md"
+            placeholder='Enter address'
+            textAlignVertical='center'
+            selectionColor='#FFAB48'
+            // caretHidden={loading}
+            placeholderTextColor="rgb(148, 163, 184)"
+            style={{fontFamily: 'Regular'}}
+            // editable={!loading}
+            // value={username}
+            // onChangeText={setUsername}
+            />
+        </View>
+
         <View className="space-y-1">
           <Text className="text-lg text-gray-600" style={{fontFamily: 'Regular'}}>Password</Text>
           <TextInput
@@ -95,7 +101,7 @@ const RegisterScreen = ( {navigation}: any ) => {
             // editable={!loading}
             // value={username}
             // onChangeText={setUsername}
-			secureTextEntry={true}
+			      secureTextEntry={true}
             />
         </View>
         <View className="space-y-1 mb-5">
