@@ -35,8 +35,9 @@ export default function App() {
 
   return (
 		<NavigationContainer>
-      <AuthStack />
-        {/* <StackNavigator /> */}
+			<StatusBar style='dark' />
+      {/* <AuthStack /> */}
+        <StackNavigator />
     </NavigationContainer>
     // <BasketScreen />
   );
