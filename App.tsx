@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './Navigators/StackNavigator';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import { useCallback, useEffect } from 'react';
 import AuthStack from './Navigators/AuthStack';
+import { AppProvider } from './Providers/AppProvider';
+import Authenticator from './Authenticator';
 
 
 
@@ -35,11 +36,11 @@ export default function App() {
 
   return (
 		<NavigationContainer>
-			<StatusBar style='dark' />
-      {/* <AuthStack /> */}
-        <StackNavigator />
+			<AppProvider>
+				<StatusBar style='dark' />
+				<Authenticator />
+			</AppProvider>
     </NavigationContainer>
-    // <BasketScreen />
   );
 }
 
