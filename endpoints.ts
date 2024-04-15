@@ -1,2 +1,2 @@
-export const RegisterAPI = 'http://localhost:8000/api/buyer/register'
-export const LoginAPI = ''
+export const RegisterAPI = 'https://jewel.cmsandbox.com.ng/api/buyer/register'
+export const LoginAPI = 'https://jewel.cmsandbox.com.ng/api/buyer/login'
