@@ -26,7 +26,7 @@ const LoginScreen = ({ navigation }: any) => {
 	}
 
   const formData = {
-    'email': email.trim(),
+    'email': email.toLowerCase().trim(),
     'password': password.trim(),
   }
 
@@ -35,17 +35,23 @@ const LoginScreen = ({ navigation }: any) => {
 
     
     setLoading(true)
+    console.log(JSON.stringify(formData))
 
     fetch(`${LoginAPI}`, {
       method: 'POST',
       headers: new Headers({
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }),
       body: JSON.stringify(formData)
     })
     .then(res => res.json())
     .then(resp => {
       setLoading(false)
+      if(resp?.errors){
+        return alert(resp?.message)
+      }
+      
       console.log(resp)
     })
     .catch(err => {
