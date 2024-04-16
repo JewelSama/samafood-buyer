@@ -1,8 +1,11 @@
-import React, {useLayoutEffect, useState, useEffect} from 'react'
-import { View, Text, Platform, StatusBar, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import React, {useLayoutEffect, useState, useEffect, useContext} from 'react'
+import { View, Text, Platform, StatusBar, Image, TextInput, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Feather, FontAwesome5, FontAwesome6, FontAwesome, Entypo, AntDesign, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { AppContext } from '../Providers/AppProvider'
+import { windowWidth } from '../utils/Dimension'
+import { MenusAPI, baseURL } from '../endpoints'
 
 
 
@@ -16,72 +19,13 @@ const data = [
 ]
 
 const hhh = 'https://img.freepik.com/free-vector/simple-corn-cartoon_1308-124847.jpg'
-const data2 = [
-  {
-    id: 1,
-    name: 'samm1',
-    hhh: hhh
-  },
-  {
-    id: 2,
-    name: 'samm2',
-    hhh: hhh
-  },
-  {
-    id: 3,
-    name: 'samm3',
-    hhh: hhh
-  },
-  {
-    id: 4,
-    name: 'samm4',
-    hhh: hhh
-  },
-  {
-    id: 5,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 6,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 7,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 8,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 9,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 10,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 11,
-    name: 'samm',
-    hhh: hhh
-  },
-  {
-    id: 12,
-    name: 'samm',
-    hhh: hhh
-  },
-]
+
 
 const HomeScreen = ({ navigation }: any) => {
   const [featuredCategory, setfeaturedCategory] = useState(data)
-  const [categories, setCategories] = useState(data2);
+  const [ loading, setLoading ] = useState(false);
+  const [menus, setMenus] = useState<any>([]);
+  const { user } = useContext<any>(AppContext);
 
 
 
@@ -91,6 +35,59 @@ const HomeScreen = ({ navigation }: any) => {
       headerShown: false,
     })
   }, [navigation])
+
+  useEffect(() => {
+    setLoading(true)
+    fetch(`${MenusAPI}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${user?.token}`
+      })
+    })
+    .then(res => res.json())
+    .then(resp => {
+      setLoading(false)
+      if(resp?.errors){
+        return alert(resp?.message)
+      }
+      // console.log(baseURL+'/'+resp?.data[0].display_pic)
+      setMenus(resp?.data); 
+    })
+    .catch(err => {
+      setLoading(false)
+      console.log(err)
+      alert('Something went wrong')
+    })
+
+  }, [])
+
+  
+  useEffect(() => {
+    setLoading(true)
+    fetch(`${MenusAPI}`, {
+      method: 'GET',
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${user?.token}`
+      })
+    })
+    .then(res => res.json())
+    .then(resp => {
+      setLoading(false)
+      if(resp?.errors){
+        return alert(resp?.message)
+      }
+      // console.log(baseURL+'/'+resp?.data[0].display_pic)
+      setMenus(resp?.data); 
+    })
+    .catch(err => {
+      setLoading(false)
+      console.log(err)
+      alert('Something went wrong')
+    })
+
+  }, [])
   
 
   return (
@@ -105,46 +102,46 @@ const HomeScreen = ({ navigation }: any) => {
           />
 
           <View className='flex-1'>
-            <Text className="font-bold text-gray-400 text-xs">Deliver Now</Text>
-            <Text className="font-bold text-xl">Current Location
-            <Entypo name="chevron-down" size={20} color="#00cc88" />             
+            <Text className="text-gray-400 text-xs" style={{fontFamily: 'Bold'}}>Order Now</Text>
+            <TouchableOpacity>
+            <Text className="text-base text-slate-700" style={{fontFamily: 'Bold'}}>{user?.username}
+            <Entypo name="chevron-down" size={20} color="#064929" />             
            </Text>
+           </TouchableOpacity>
           </View>
           <View className='flex flex-row px-1 space-x-4 items-center'>
             <TouchableOpacity className='items-center' onPress={() => navigation.navigate('Order')}>
-              <Feather name='shopping-cart' size={25} color="#00cc88" />           
+              <Feather name='shopping-cart' size={25} color="#064929" />           
             </TouchableOpacity>
             <TouchableOpacity className='items-center' onPress={() => navigation.navigate('Profile')}>
-              <FontAwesome name="user-circle-o" size={25} color="#00cc88" />  
+              <FontAwesome name="user-circle-o" size={25} color="#064929" />  
             </TouchableOpacity>
           </View>
 
         
         </View>
+
         {/* Search */}
         <View className="flex-row items-center space-x-2 pb-2 mx-2">
           <View className="flex-row space-x-2 flex-1 bg-gray-200 p-3">
             <Feather name="search" size={20} color="gray" />             
-            <TextInput placeholder='Restaurants and cuisines'
+            <TextInput placeholder='Restaurants near you'
               keyboardType='default'
             />
           </View>
-            <AntDesign name="filter" size={25} color="#00cc88" />             
+            <AntDesign name="filter" size={25} color="#064929" />             
 
         </View>
         
-        {/* body */}
-
         <ScrollView className="bg-gray-10" showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 125}}>
-
 
           {/* <Categories /> */}
           <ScrollView  className='h-20' horizontal  showsHorizontalScrollIndicator={false} style={{paddingHorizontal: 15, paddingTop: 10}}>
             {
-              categories?.map((category) => (
-              <TouchableOpacity className="relative bg-gray-300 mr-2" key={category?.id}>
-                  <Image source={{uri: category.hhh}} className="h-20 w-20 rounded" />
-                <Text className="absolute bottom-1 left-1 text-white font-bold">{category?.name}</Text>     
+              !loading && menus?.map((menu: any) => (
+              <TouchableOpacity className="relative bg-gray-300 mr-2" key={menu?.id}>
+                  <Image source={{uri: baseURL+'/'+menu.display_pic}} className="h-20 w-20 rounded" />
+                <Text className="absolute bottom-1 left-1 text-white font-bold">{menu?.name}</Text>     
               </TouchableOpacity>
 
               ))
@@ -152,61 +149,71 @@ const HomeScreen = ({ navigation }: any) => {
           </ScrollView>
 
 
-          <View className='w-full'>
-            <View className="mt-4 flex-row items-center justify-between px-4">
-              <Text className="font-bold text-lg">{"Offers near you!"}</Text>
-              <Entypo name='chevron-down' color={'#00cc88'} size={20} />
-            </View>
-            <Text className="text-xs text-gray-500 px-4">{"Why not support your local restaurants today?"}</Text>
-            <View className='py-4 w-full items-center px-2 space-y-4'>
+          {
+            !loading ? (
+             
+             <View className='w-full mt-2'>
+                <View className="mt-4 flex-row items-center justify-between px-4">
+                  <Text className="text-lg" style={{fontFamily: 'SemiBold'}}>Restaurants near you</Text>
+                  <Entypo name='chevron-down' color={'#064929'} size={20} />
+                </View>
+                <Text className="text-xs text-gray-500 px-4" style={{fontFamily: 'Regular'}}>{"Why not support your local restaurants today?"}</Text>
+                <View className='py-4 w-full items-center px-2 space-y-4'>
 
-              <TouchableOpacity className="bg-white rounded-lg w-full shadow-s" onPress={() => navigation.navigate('Restaurant')}>
-              <Image 
-                source={{
-                    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAEAtfryy3h79PfpxPs7zB6hNVslMDtTu5S2AdP8wqjQ&s'
-                }}
-                className="h-36 rounded-sm"
-              />
-              <View className="px-3 pb-4">
-                <Text className="font-bold text-lg pt-2">{"Chillout Restaurant"}</Text>
-                <View className="flex-row mb-1 items-center space-x-1">
-                    <AntDesign name='star' size={18} color={'green'} />
-                    <Text className="text-green-500">{4.6}</Text>
+                  <TouchableOpacity className="bg-white rounded-lg w-full shadow-s" onPress={() => navigation.navigate('Restaurant')}>
+                  <Image 
+                    source={{
+                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAEAtfryy3h79PfpxPs7zB6hNVslMDtTu5S2AdP8wqjQ&s'
+                    }}
+                    className="h-36 rounded-sm"
+                  />
+                  <View className="px-3 pb-4">
+                    <Text className="font-bold text-lg pt-2">{"Chillout Restaurant"}</Text>
+                    <View className="flex-row mb-1 items-center space-x-1">
+                        <AntDesign name='star' size={18} color={'green'} />
+                        <Text className="text-green-500">{4.6}</Text>
+                    </View>
+                    <View className="flex-row items-center space-x-1">
+                      <FontAwesome6 name='location-dot' size={18} color={'gray'} />
+                        <Text className="text-xs text-gray-500">Nearby . {"10, hassan avenue"}</Text>
+                    </View>
+
+                  </View>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity className="bg-white rounded-lg w-full shadow-s">
+                  <Image 
+                    source={{
+                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAEAtfryy3h79PfpxPs7zB6hNVslMDtTu5S2AdP8wqjQ&s'
+                    }}
+                    className="h-36 rounded-sm"
+                  />
+                  <View className="px-3 pb-4">
+                    <Text className="font-bold text-lg pt-2">{"Chillout Restaurant"}</Text>
+                    <View className="flex-row mb-1 items-center space-x-1">
+                        <AntDesign name='star' size={18} color={'green'} />
+                        <Text className="text-green-500">{4.6}</Text>
+                    </View>
+                    <View className="flex-row items-center space-x-1">
+                      <FontAwesome6 name='location-dot' size={18} color={'gray'} />
+                        <Text className="text-xs text-gray-500">Nearby . {"10, hassan avenue"}</Text>
+                    </View>
+
+                  </View>
+                  </TouchableOpacity>
+
+                  
                 </View>
-                <View className="flex-row items-center space-x-1">
-                  <FontAwesome6 name='location-dot' size={18} color={'gray'} />
-                    <Text className="text-xs text-gray-500">Nearby . {"10, hassan avenue"}</Text>
-                </View>
+                
 
               </View>
-              </TouchableOpacity>
 
-              <TouchableOpacity className="bg-white rounded-lg w-full shadow-s">
-              <Image 
-                source={{
-                    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAEAtfryy3h79PfpxPs7zB6hNVslMDtTu5S2AdP8wqjQ&s'
-                }}
-                className="h-36 rounded-sm"
-              />
-              <View className="px-3 pb-4">
-                <Text className="font-bold text-lg pt-2">{"Chillout Restaurant"}</Text>
-                <View className="flex-row mb-1 items-center space-x-1">
-                    <AntDesign name='star' size={18} color={'green'} />
-                    <Text className="text-green-500">{4.6}</Text>
-                </View>
-                <View className="flex-row items-center space-x-1">
-                  <FontAwesome6 name='location-dot' size={18} color={'gray'} />
-                    <Text className="text-xs text-gray-500">Nearby . {"10, hassan avenue"}</Text>
-                </View>
-
+            ) : (
+              <View className='w-full'>
+                <ActivityIndicator color="#064929" size={'large'} />
               </View>
-              </TouchableOpacity>
-
-              
-            </View>
-            
-
-          </View>
+            )
+          }
 
 
 
