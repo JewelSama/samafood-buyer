@@ -1,26 +1,30 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { useContext, useLayoutEffect } from 'react'
 import { AntDesign, FontAwesome6, Entypo } from "@expo/vector-icons"
 import DishRow from '../Components/DIshRow'
 import BasketIcon from '../Components/BasketIcon'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { VendorMenuAPI, baseURL } from '../endpoints'
+import { AppContext } from '../Providers/AppProvider'
 
 
-const RestaurantScreen = ({ navigation }: any) => {
-    const [res, setRes] = useState([])
+const RestaurantScreen = ({ navigation, route }: any) => {
+    const [menus, setMenus] = useState([])
+    const { vendor } = route.params;
+    const { user } = useContext<any>(AppContext);
+    const [ loading, setLoading ] = useState(false)
 
-
-    const hhh = 'https://img.freepik.com/free-vector/simple-corn-cartoon_1308-124847.jpg'
-    const dishes = [
-        {
-            id: 1,
-            name: 'Jollof rice',
-            short_description: "Sweet and tasty jollof rice",
-            price: '1500',
-            image: hhh
-        }
-    ]
+    // const hhh = 'https://img.freepik.com/free-vector/simple-corn-cartoon_1308-124847.jpg'
+    // const dishes = [
+    //     {
+    //         id: 1,
+    //         name: 'Jollof rice',
+    //         short_description: "Sweet and tasty jollof rice",
+    //         price: '1500',
+    //         image: hhh
+    //     }
+    // ]
 
 
 
@@ -30,6 +34,33 @@ const RestaurantScreen = ({ navigation }: any) => {
         })
     }, [])
 
+    useEffect(() => {
+        setLoading(true)
+        fetch(`${VendorMenuAPI}/${user?.id}`, {
+          method: 'GET',
+          headers: new Headers({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${user?.token}`
+          })
+        })
+        .then(res => res.json())
+        .then(resp => {
+          setLoading(false)
+          if(resp?.errors){
+            return alert(resp?.message)
+          }
+          console.log(resp)
+          setMenus(resp?.data); 
+        })
+        .catch(err => {
+          setLoading(false)
+          console.log(err)
+          alert('Something went wrong')
+        })
+    
+      }, [])
+    
+
   return (
     <>
     <BasketIcon />
@@ -37,7 +68,7 @@ const RestaurantScreen = ({ navigation }: any) => {
     <ScrollView className='bg-white'>
         <View className="relative">
             <Image 
-                source={{ uri: hhh }}
+                source={{ uri: baseURL+'/'+vendor.display_pic }}
                 className="w-full h-56 bg-gray-300 p-4"
             />
             <TouchableOpacity onPress={navigation.goBack} className="absolute top-14 left-5 p-2 bg-gray-100 rounded-full">
@@ -46,24 +77,22 @@ const RestaurantScreen = ({ navigation }: any) => {
         </View>
         <View className="bg-white">
             <View className="px-4 pt-4">
-                <Text className="text-3xl font-bold">Chillout Restaurant</Text>
+                <Text className="text-3xl font-bold">{vendor?.name}</Text>
                 <View className="flex-row space-x-2 my-1">
                     <View className="flex-row items-center space-x-1">
-                        {/* <StarIcon size={22} color="green" opacity={0.5} /> */}
                         <AntDesign name='star' size={18} color={'green'} />
                         <Text className="text-green-500">4.6</Text>
                     </View>
                    
                     <View className="flex-row items-center space-x-1">
-                        {/* <LocationMarkerIcon size={22} color="gray" opacity={0.4} /> */}
                         <FontAwesome6 name='location-dot' size={18} color={'gray'} />
                         <Text className="text-xs text-gray-500">
-                            <Text className="text-green-500">Nearby . {"10, hassan avenue"}</Text>
+                            <Text className="text-green-500">Nearby . {vendor?.address}</Text>
                         </Text>
                     </View>
 
                 </View>
-                <Text className="text-gray-500 mt-2 pb-4">{"Sweet and tasty meals in a condusive environs"}</Text>
+                <Text className="text-gray-500 mt-2 pb-4">{vendor?.description}</Text>
             </View>
             <TouchableOpacity className="flex-row items-center space-x-2 p-4 border-y border-gray-300">
                 {/* <QuestionMarkCircleIcon color="gray" opacity={0.6} size={20} /> */}
@@ -78,18 +107,27 @@ const RestaurantScreen = ({ navigation }: any) => {
                 <Text className="px-4 pt-5 mb-3 font-bold text-xl">
                     Menu
                 </Text>
+                {
+                    !loading && menus ? (
+                        <View>
+                            {menus.map((menu: any) => (
+                            <DishRow 
+                                key={menu.id}
+                                id={menu.id}
+                                name={menu.name}
+                                description={menu.description}
+                                price={menu.price}
+                                image={baseURL+'/'+menu.display_pic}
+                            />
+                            ))}
+                        </View>
+                    ) : (
+                        <View className='mt-10'>
+                            <ActivityIndicator size={'small'} color="#064929" />
+                        </View>
 
-            {/* DishRows */}
-             {dishes.map(dish => (
-                <DishRow 
-                    key={dish.id}
-                    id={dish.id}
-                    name={dish.name}
-                    description={dish.short_description}
-                    price={dish.price}
-                    image={dish.image}
-                />
-             ))}
+                    )
+                }
 
 
             </View>
