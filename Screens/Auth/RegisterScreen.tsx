@@ -1,12 +1,17 @@
 import { ScrollView, TouchableOpacity, Image, Text, View, TextInput, useColorScheme, ActivityIndicator } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { isEmpty } from '../../utils';
 import { RegisterAPI } from '../../endpoints';
+import { AppContext } from '../../Providers/AppProvider';
+import * as SecureStore from 'expo-secure-store';
+
 
 const RegisterScreen = ( {navigation}: any ) => {
   const [loading, setLoading] = useState(false)
+  const { setUser } = useContext<any>(AppContext)
+
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -49,14 +54,33 @@ const RegisterScreen = ( {navigation}: any ) => {
     fetch(`${RegisterAPI}`, {
       method: 'POST',
       headers: new Headers({
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       }),
       body: JSON.stringify(formData)
     })
     .then(res => res.json())
     .then(resp => {
       setLoading(false)
-      console.log(resp)
+      if(resp?.errors){
+        return alert(resp?.message)
+      }
+
+      setUser(resp)
+
+      			
+			const userResponse = {
+        id: resp.user.id,
+        username: resp.user.username,
+        phone_number: resp.user.phone_number,
+				email: resp.user.email,
+				token: resp.token,
+				address: resp.user.address,
+
+			}
+			
+			setUser(userResponse);
+			SecureStore.setItemAsync('user', JSON.stringify(userResponse));
     })
     .catch(err => {
       setLoading(false)
