@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, View, ScrollView, Image, useColorScheme } from 'react-native'
+import { TouchableOpacity, Text, View, ScrollView, Image, Alert } from 'react-native'
 import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store'
@@ -18,14 +18,21 @@ const ProfileScreen = ({ navigation }: any) => {
 	const { user, setUser } = useContext<any>(AppContext)
 	
 	const Logout = async() => {
-			try {
-				await SecureStore.deleteItemAsync('user')
+		Alert.alert('Logout', 'Are you sure you want to logout?', [
+			{
+			  text: 'Cancel',
+			  onPress: () => console.log('Cancel Pressed'),
+			  style: 'cancel',
+			},
+			{text: 'Yes', onPress: async() => {
+				await SecureStore.deleteItemAsync('user'),
 				// @ts-ignore
 				setUser(null);
-			} catch(e) {
-				// remove error
-				console.error(e);
+				alert('You have been logged out.')
 			}
+			
+		},
+		])
 	}
 
 
