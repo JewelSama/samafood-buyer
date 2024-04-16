@@ -1,6 +1,9 @@
 import { TouchableOpacity, Text, View, ScrollView, Image, useColorScheme } from 'react-native'
 import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as SecureStore from 'expo-secure-store'
+import { useContext } from 'react';
+import { AppContext } from '../Providers/AppProvider';
 
 
 type TListItem = {
@@ -10,10 +13,23 @@ type TListItem = {
 	screenName: string
 };
 
-const ProfileScreen = ({ navigation }: any) => {
 
-	const colorScheme = useColorScheme();
-	// const iconColor = colorScheme === 'light' ? "#121212" : 'gray';
+const ProfileScreen = ({ navigation }: any) => {
+	const { user, setUser } = useContext<any>(AppContext)
+	
+	const Logout = async() => {
+			try {
+				await SecureStore.deleteItemAsync('user')
+				// @ts-ignore
+				setUser(null);
+			} catch(e) {
+				// remove error
+				console.error(e);
+			}
+	}
+
+
+
 
 	const ListItem = ({ icon, title, subtext, screenName }: TListItem) => <TouchableOpacity onPress={() => navigation.navigate(screenName)} className='flex flex-row space-x-4 items-center my-1' style={{width: 342, height: 54, paddingVertical: 8, paddingHorizontal: 10}}>
 		<View className='flex flex-row space-x-4 items-center'>
@@ -47,7 +63,7 @@ const ProfileScreen = ({ navigation }: any) => {
 				<ScrollView className='h-full' showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 100}}>
 					<>
 						<View className='items-center justify-center relative mt-2'>
-							<View style={{height: 117, width: 117}} className='bg-[#BD7929]  items-center justify-center rounded-full'>
+							<View style={{height: 117, width: 117}} className='bg-[#064929]  items-center justify-center rounded-full'>
 								<View style={{height: 115, width: 115}} className='bg-white rounded-full items-center justify-center'>
 									<Image 
 										source={require('../assets/icon.png')}
@@ -56,7 +72,7 @@ const ProfileScreen = ({ navigation }: any) => {
 									/>
 								</View>
 								<TouchableOpacity className='h-6 w-6 items-center justify-center bg-white rounded-full absolute bottom-2 right-0'>
-									<AntDesign name='camerao' size={15} color="#BD7929" />
+									<AntDesign name='camerao' size={15} color="#064929" />
 								</TouchableOpacity>
 							</View>
 
@@ -79,12 +95,12 @@ const ProfileScreen = ({ navigation }: any) => {
 							<ListItem icon={<AntDesign name="question" color={'#121212'} size={22} />} title="About Afriride" subtext="Terms and conditions, Privacy Policy" screenName="AboutScreen" />
 							<ListItem icon={<Feather name="phone" color={'#121212'} size={22} />} title="Contact Support" subtext="Customer Service care support" screenName={'Contact Support'} />
 
-							<TouchableOpacity onPress={() => navigation.navigate('DeliveryOTP')} className='flex flex-row space-x-4 items-center' style={{width: 342, height: 54, paddingVertical: 8, paddingHorizontal: 10}}>
+							<TouchableOpacity onPress={Logout} className='flex flex-row space-x-4 items-center' style={{width: 342, height: 54, paddingVertical: 8, paddingHorizontal: 10}}>
 								<View>
-									<AntDesign name="logout" color="#FFAB48" size={22} />
+									<AntDesign name="logout" color="rgb(248, 113, 113)" size={22} />
 								</View>
 								<View className='flex-1'>
-									<Text className='text-[#FFAB48] text-sm' style={{fontFamily: 'SemiBold'}}>Logout</Text>
+									<Text className='text-red-400 text-sm' style={{fontFamily: 'SemiBold'}}>Logout</Text>
 								</View>
 							</TouchableOpacity>
 						</View>
