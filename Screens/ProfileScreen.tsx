@@ -84,8 +84,8 @@ const ProfileScreen = ({ navigation }: any) => {
 							</View>
 
 							<View className='items-center justify-center mt-1'>
-								<Text className='text-base' style={{fontFamily: 'Bold'}}>Michael Osoba</Text>
-								<Text className='text-[#8A8A8A]' style={{fontFamily: 'Regular'}}>michaeltherider@gmail.com</Text>
+								<Text className='text-base' style={{fontFamily: 'Bold'}}>{user?.username}</Text>
+								<Text className='text-[#8A8A8A]' style={{fontFamily: 'Regular'}}>{user?.email}</Text>
 							</View>
 						</View>
 
