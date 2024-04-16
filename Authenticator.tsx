@@ -12,18 +12,19 @@ const Authenticator = () => {
 	const [ loading, setLoading ] = useState<boolean>(false);
 
 	useEffect(() => {
-		// SecureStore.getItemAsync('user')
-		// .then(userString => {
-		// 	if (userString) {
-		// 		let userObject = JSON.parse(userString)
-		// 		setUser(userObject);
-		// 	}
-		// 	setLoading(false);
-		// })
-		// .catch(err => {
-		// 	setLoading(false);
-		//   	console.log(err);
-		// })
+		console.log("user: ", user)
+		SecureStore.getItemAsync('user')
+		.then(userString => {
+			if (userString) {
+				let userObject = JSON.parse(userString)
+				setUser(userObject);
+			}
+			setLoading(false);
+		})
+		.catch(err => {
+			setLoading(false);
+		  	console.log(err);
+		})
 	}, []);
 
 	if (loading) {
@@ -34,7 +35,7 @@ const Authenticator = () => {
 		)
 	}
 
-	if(user !== null && user !== undefined && user?.length > 1) return <StackNavigator />;
+	if(user !== null && user !== undefined) return <StackNavigator />;
 	else return <AuthStack />;
 }
 
