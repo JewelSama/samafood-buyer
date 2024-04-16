@@ -138,7 +138,7 @@ const HomeScreen = ({ navigation }: any) => {
 
         </View>
         
-        <ScrollView className="bg-gray-10" showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 125}}>
+        <ScrollView className="bg-gray-10" showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 60}}>
 
           {/* <Categories /> */}
           <ScrollView  className='h-20' horizontal  showsHorizontalScrollIndicator={false} style={{paddingHorizontal: 15, paddingTop: 10}}>
