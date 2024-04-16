@@ -5,7 +5,7 @@ import { Feather, FontAwesome5, FontAwesome6, FontAwesome, Entypo, AntDesign, Io
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppContext } from '../Providers/AppProvider'
 import { windowWidth } from '../utils/Dimension'
-import { MenusAPI, baseURL } from '../endpoints'
+import { MenusAPI, VendorsAPI, baseURL } from '../endpoints'
 
 
 
@@ -22,7 +22,7 @@ const hhh = 'https://img.freepik.com/free-vector/simple-corn-cartoon_1308-124847
 
 
 const HomeScreen = ({ navigation }: any) => {
-  const [featuredCategory, setfeaturedCategory] = useState(data)
+  const [vendors, setVendors] = useState(data)
   const [ loading, setLoading ] = useState(false);
   const [menus, setMenus] = useState<any>([]);
   const { user } = useContext<any>(AppContext);
@@ -35,6 +35,9 @@ const HomeScreen = ({ navigation }: any) => {
       headerShown: false,
     })
   }, [navigation])
+
+
+
 
   useEffect(() => {
     setLoading(true)
@@ -62,10 +65,12 @@ const HomeScreen = ({ navigation }: any) => {
 
   }, [])
 
-  
+
+
+
   useEffect(() => {
     setLoading(true)
-    fetch(`${MenusAPI}`, {
+    fetch(`${VendorsAPI}`, {
       method: 'GET',
       headers: new Headers({
         'Accept': 'application/json',
@@ -78,8 +83,8 @@ const HomeScreen = ({ navigation }: any) => {
       if(resp?.errors){
         return alert(resp?.message)
       }
-      // console.log(baseURL+'/'+resp?.data[0].display_pic)
-      setMenus(resp?.data); 
+      // console.log(resp?.data[0])
+      setVendors(resp?.data); 
     })
     .catch(err => {
       setLoading(false)
@@ -138,7 +143,7 @@ const HomeScreen = ({ navigation }: any) => {
           {/* <Categories /> */}
           <ScrollView  className='h-20' horizontal  showsHorizontalScrollIndicator={false} style={{paddingHorizontal: 15, paddingTop: 10}}>
             {
-              !loading && menus?.map((menu: any) => (
+              !loading && menus && menus?.map((menu: any) => (
               <TouchableOpacity className="relative bg-gray-300 mr-2" key={menu?.id}>
                   <Image source={{uri: baseURL+'/'+menu.display_pic}} className="h-20 w-20 rounded" />
                 <Text className="absolute bottom-1 left-1 text-white font-bold">{menu?.name}</Text>     
@@ -159,48 +164,32 @@ const HomeScreen = ({ navigation }: any) => {
                 </View>
                 <Text className="text-xs text-gray-500 px-4" style={{fontFamily: 'Regular'}}>{"Why not support your local restaurants today?"}</Text>
                 <View className='py-4 w-full items-center px-2 space-y-4'>
+                {
+                  vendors && vendors.map((vendor: any) => (
+                    
+                    <TouchableOpacity className="bg-white rounded-lg w-full shadow-s" onPress={() => navigation.navigate('Restaurant', {vendor})}>
+                      <Image 
+                        source={{
+                            uri: baseURL+'/'+vendor.display_pic
+                        }}
+                        className="h-36 rounded-sm"
+                      />
+                      <View className="px-3 pb-4">
+                      <Text className="font-bold text-lg pt-2">{vendor?.name}</Text>
+                      <View className="flex-row mb-1 items-center space-x-1">
+                          <AntDesign name='star' size={18} color={'rgb(250, 204, 21)'} />
+                          <Text className="text-[#064929]">{4.6}</Text>
+                      </View>
+                      <View className="flex-row items-center space-x-1">
+                        <FontAwesome6 name='location-dot' size={18} color={'gray'} />
+                          <Text className="text-xs text-gray-500">Nearby . {vendor?.address}</Text>
+                      </View>
 
-                  <TouchableOpacity className="bg-white rounded-lg w-full shadow-s" onPress={() => navigation.navigate('Restaurant')}>
-                  <Image 
-                    source={{
-                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAEAtfryy3h79PfpxPs7zB6hNVslMDtTu5S2AdP8wqjQ&s'
-                    }}
-                    className="h-36 rounded-sm"
-                  />
-                  <View className="px-3 pb-4">
-                    <Text className="font-bold text-lg pt-2">{"Chillout Restaurant"}</Text>
-                    <View className="flex-row mb-1 items-center space-x-1">
-                        <AntDesign name='star' size={18} color={'green'} />
-                        <Text className="text-green-500">{4.6}</Text>
-                    </View>
-                    <View className="flex-row items-center space-x-1">
-                      <FontAwesome6 name='location-dot' size={18} color={'gray'} />
-                        <Text className="text-xs text-gray-500">Nearby . {"10, hassan avenue"}</Text>
-                    </View>
+                      </View>
+                    </TouchableOpacity>
 
-                  </View>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity className="bg-white rounded-lg w-full shadow-s">
-                  <Image 
-                    source={{
-                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAEAtfryy3h79PfpxPs7zB6hNVslMDtTu5S2AdP8wqjQ&s'
-                    }}
-                    className="h-36 rounded-sm"
-                  />
-                  <View className="px-3 pb-4">
-                    <Text className="font-bold text-lg pt-2">{"Chillout Restaurant"}</Text>
-                    <View className="flex-row mb-1 items-center space-x-1">
-                        <AntDesign name='star' size={18} color={'green'} />
-                        <Text className="text-green-500">{4.6}</Text>
-                    </View>
-                    <View className="flex-row items-center space-x-1">
-                      <FontAwesome6 name='location-dot' size={18} color={'gray'} />
-                        <Text className="text-xs text-gray-500">Nearby . {"10, hassan avenue"}</Text>
-                    </View>
-
-                  </View>
-                  </TouchableOpacity>
+                  ))
+                }
 
                   
                 </View>
