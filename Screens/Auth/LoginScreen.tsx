@@ -1,13 +1,17 @@
-import { TouchableOpacity, TextInput, ScrollView, useColorScheme, Text, View, ActivityIndicator } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import { TouchableOpacity, TextInput, ScrollView, Text, View, ActivityIndicator } from 'react-native'
 import { DeviceHeight } from '../../utils/Dimension';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { isEmpty } from '../../utils';
 import { LoginAPI } from '../../endpoints';
+import { AppContext } from '../../Providers/AppProvider';
+import * as SecureStore from 'expo-secure-store';
+
 
 const LoginScreen = ({ navigation }: any) => {
   const [loading, setLoading] = useState(false)
+  const { setUser } = useContext<any>(AppContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -35,7 +39,7 @@ const LoginScreen = ({ navigation }: any) => {
 
     
     setLoading(true)
-    console.log(JSON.stringify(formData))
+    // console.log(JSON.stringify(formData))
 
     fetch(`${LoginAPI}`, {
       method: 'POST',
@@ -51,8 +55,24 @@ const LoginScreen = ({ navigation }: any) => {
       if(resp?.errors){
         return alert(resp?.message)
       }
-      
+
       console.log(resp)
+      setUser(resp)
+
+      			
+			const userResponse = {
+        id: resp.user.id,
+        username: resp.user.username,
+        phone_number: resp.user.phone_number,
+				email: resp.user.email,
+				token: resp.token,
+				address: resp.user.address,
+
+			}
+			
+			setUser(userResponse);
+			SecureStore.setItemAsync('user', JSON.stringify(userResponse));
+
     })
     .catch(err => {
       setLoading(false)
