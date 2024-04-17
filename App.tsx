@@ -6,6 +6,7 @@ import { useCallback, useEffect } from 'react';
 import AuthStack from './Navigators/AuthStack';
 import { AppProvider } from './Providers/AppProvider';
 import Authenticator from './Authenticator';
+import { CartProvider } from './Providers/CartProvider';
 
 
 
@@ -37,8 +38,10 @@ export default function App() {
   return (
 		<NavigationContainer>
 			<AppProvider>
-				<StatusBar style='dark' />
-				<Authenticator />
+				<CartProvider>
+					<StatusBar style='dark' />
+					<Authenticator />
+				</CartProvider>
 			</AppProvider>
     </NavigationContainer>
   );
