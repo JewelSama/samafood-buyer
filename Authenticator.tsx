@@ -2,17 +2,15 @@ import { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { AppContext } from './Providers/AppProvider';
-import StackNavigator from './Navigators/StackNavigator';
 import AuthStack from './Navigators/AuthStack';
+import StackNavigator from './Navigators/StackNavigator';
 
 
 const Authenticator = () => {
 	const { user, setUser } = useContext<any>(AppContext)
-	// const [ loading, setLoading ] = useState<boolean>(true);
-	const [ loading, setLoading ] = useState<boolean>(false);
+	const [ loading, setLoading ] = useState<boolean>(true);
 
 	useEffect(() => {
-		console.log("user: ", user)
 		SecureStore.getItemAsync('user')
 		.then(userString => {
 			if (userString) {
