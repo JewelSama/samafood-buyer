@@ -36,7 +36,7 @@ const RestaurantScreen = ({ navigation, route }: any) => {
 
     useEffect(() => {
         setLoading(true)
-        fetch(`${VendorMenuAPI}/${user?.id}`, {
+        fetch(`${VendorMenuAPI}/${vendor?.id}`, {
           method: 'GET',
           headers: new Headers({
             'Accept': 'application/json',
