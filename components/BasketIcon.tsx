@@ -8,7 +8,7 @@ const BasketIcon = () => {
   // @ts-ignore
     const { totalCartItems, cartItems, totalAmount } = useCart();
     const [items, setItems] = useState([5]) 
-    console.log('Cart: ', cartItems)
+    // console.log('Cart: ', cartItems)
 
 
 
