@@ -7,6 +7,7 @@ import PreaparingOrderScreen from '../Screens/PreaparingOrderScreen';
 import DeliveryScreen from '../Screens/DeliveryScreen';
 import OrderScreen from '../Screens/OrderScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
+import UpdateProfile from '../Screens/UpdateProfile';
 
 
 
@@ -30,6 +31,9 @@ const StackNavigator = () => {
             options={{presentation: "fullScreenModal", headerShown:false}}
           />
           <Stack.Screen name="Profile" component={ProfileScreen} 
+            options={{presentation: "fullScreenModal", headerShown:false}}
+          />
+          <Stack.Screen name="UpdateProfile" component={UpdateProfile} 
             options={{presentation: "fullScreenModal", headerShown:false}}
           />
     </Stack.Navigator>
