@@ -37,6 +37,13 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+    // Function to remove item from cart
+    const removeAllFromCart = (itemId) => {
+      const updatedCart = [];
+      setCartItems(updatedCart);
+    };
+
+
   return (
     <CartContext.Provider
       value={{ cartItems, 
@@ -44,6 +51,7 @@ export const CartProvider = ({ children }) => {
               removeFromCart, 
               totalCartItems: getTotalCartItems() ,
               totalAmount: getTotalAmount(),
+              removeAllFromCart
             }}
     >
       {children}
