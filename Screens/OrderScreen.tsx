@@ -31,7 +31,7 @@ const OrderScreen = ({ navigation }: any) => {
           return alert(resp?.message)
         }
         // console.log(resp?.data[0]?.vendor)
-        setOrders(resp?.data); 
+        setOrders(resp?.data.reverse()); 
       })
       .catch(err => {
         setLoading(false)
