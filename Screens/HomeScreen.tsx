@@ -167,7 +167,7 @@ const HomeScreen = ({ navigation }: any) => {
                 {
                   vendors && vendors.map((vendor: any) => (
                     
-                    <TouchableOpacity className="bg-white rounded-lg w-full shadow-s" onPress={() => navigation.navigate('Restaurant', {vendor})}>
+                    <TouchableOpacity key={vendor?.id} className="bg-white rounded-lg w-full shadow-s" onPress={() => navigation.navigate('Restaurant', {vendor})}>
                       <Image 
                         source={{
                             uri: baseURL+'/'+vendor.display_pic
