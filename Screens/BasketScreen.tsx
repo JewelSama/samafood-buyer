@@ -9,8 +9,12 @@ import { useCart } from '../Providers/CartProvider'
 
 
 const BasketScreen = ({ navigation }: any) => {
-  const { totalCartItems, cartItems, totalAmount } = useCart();
+  const { totalCartItems, cartItems, totalAmount, removeFromCart } = useCart();
     // console.log('Cartit: ', baseURL+'/'+cartItems[0]?.image)
+
+    const handleRemoveFromCart = (id) => {
+      removeFromCart(id);
+    };
 
 
 
@@ -42,17 +46,17 @@ const BasketScreen = ({ navigation }: any) => {
             cartItems && cartItems.map((item, index) => (
 
               <View key={index} className="flex-row items-center space-x-3 bg-white py-2 px-5">
-                  <Text className="text-[#064929]">{item?.quantity} x</Text>
+                  <Text className="text-[#064929]" style={{fontFamily: 'Regular'}}>{item?.quantity} x</Text>
                   <Image 
                     source={{ uri: item?.image }}
                     className="h-12 w-12 rounded-full"
                   />
-                  <Text className="flex-1">{item.name}</Text>
-                  <Text className="text-gray-600">
+                  <Text className="flex-1" style={{fontFamily: 'SemiBold'}}>{item.name}</Text>
+                  <Text className="text-gray-600" style={{fontFamily: 'SemiBold'}}>
                     ₦{item.price}
                   </Text>
-                  <TouchableOpacity onPress={() => ""}>
-                    <Text className="text-[#064929] text-xs">
+                  <TouchableOpacity className='p-1' onPress={() => handleRemoveFromCart(item.id)}>
+                    <Text className="text-[#064929] text-xs" style={{fontFamily: 'Bold'}}>
                       Remove
                     </Text>
                   </TouchableOpacity>
@@ -72,7 +76,7 @@ const BasketScreen = ({ navigation }: any) => {
           <View className="flex-row justify-between">
             <Text className="text-gray-600" style={{fontFamily: 'SemiBold'}}>Delivery Fee</Text>
             <Text className="text-gray-600" style={{fontFamily: 'SemiBold'}}>
-              ₦450
+              ₦500
             </Text>
           </View>
 
@@ -83,7 +87,7 @@ const BasketScreen = ({ navigation }: any) => {
             </Text>
           </View>
 
-          <TouchableOpacity onPress={() => navigation.navigate("PreparingOrderScreen")} className="rounded-lg bg-[#064929] p-4">
+          <TouchableOpacity disabled={cartItems.length < 1} onPress={() => navigation.navigate("PreparingOrderScreen")} className={`rounded-lg ${cartItems.length < 1 ? 'bg-gray-400' : 'bg-[#064929]'} p-4`}>
             <Text className="text-center text-white text-lg font-bold">Place Order</Text>
           </TouchableOpacity>
 
