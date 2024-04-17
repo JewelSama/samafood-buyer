@@ -18,6 +18,7 @@ const DishRow = ({id, name, description, price, image}: any) => {
     const handleRemoveFromCart = () => {
       removeFromCart(id);
     };
+
   
 
 
@@ -44,7 +45,7 @@ const DishRow = ({id, name, description, price, image}: any) => {
             {isPressed && (
                 <View className="bg-white px-4">
                     <View className="flex-row items-center space-x-2 pb-3">
-                        <TouchableOpacity disabled={cartItems.length < 0} onPress={handleRemoveFromCart}>
+                        <TouchableOpacity onPress={handleRemoveFromCart}>
                             <Entypo name='circle-with-minus' size={35} color={cartItems > 0 ? "#00cc88" : "gray"}  />
                         </TouchableOpacity>
                         {
