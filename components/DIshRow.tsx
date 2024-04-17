@@ -27,9 +27,9 @@ const DishRow = ({id, name, description, price, image}: any) => {
             <TouchableOpacity onPress={() => setIsPressed(!isPressed)} className={`bg-white border p-4 border-gray-200 ${isPressed && "border-b-0"}`}>
                 <View className="flex-row">
                     <View className="flex-1 pr-2">
-                        <Text className="text-lg mb-1">{name}</Text>
-                        <Text className="text-gray-400">{description}</Text>
-                        <Text className="text-gray-400 mt-2"> ₦{price}
+                        <Text className="text-lg mb-1" style={{fontFamily: 'SemiBold'}}>{name}</Text>
+                        <Text className="text-gray-400" style={{fontFamily: 'Regular'}}>{description}</Text>
+                        <Text className="text-gray-400 mt-2" style={{fontFamily: 'Bold'}}> ₦{price}
                             {/* <Currency quantity={price} currency="NGR" /> */}
                         </Text>
                     </View>
@@ -52,7 +52,7 @@ const DishRow = ({id, name, description, price, image}: any) => {
                             itemInCart ? (
                                 <Text>{itemInCart.quantity}</Text>
                             ) : (
-                                <Text>0</Text>
+                                <Text style={{fontFamily: 'SemiBold'}}>0</Text>
                             )
                         }
 

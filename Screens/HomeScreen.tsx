@@ -146,7 +146,7 @@ const HomeScreen = ({ navigation }: any) => {
               !loading && menus && menus?.map((menu: any) => (
               <TouchableOpacity className="relative bg-gray-300 mr-2" key={menu?.id}>
                   <Image source={{uri: baseURL+'/'+menu.display_pic}} className="h-20 w-20 rounded" />
-                <Text className="absolute bottom-1 left-1 text-white font-bold">{menu?.name}</Text>     
+                <Text className="absolute bottom-1 left-1 text-white" style={{fontFamily: 'SemiBold'}}>{menu?.name}</Text>     
               </TouchableOpacity>
 
               ))
@@ -175,14 +175,14 @@ const HomeScreen = ({ navigation }: any) => {
                         className="h-36 rounded-sm"
                       />
                       <View className="px-3 pb-4">
-                      <Text className="font-bold text-lg pt-2">{vendor?.name}</Text>
+                      <Text className="text-lg pt-2" style={{fontFamily: 'SemiBold'}}>{vendor?.name}</Text>
                       <View className="flex-row mb-1 items-center space-x-1">
                           <AntDesign name='star' size={18} color={'rgb(250, 204, 21)'} />
-                          <Text className="text-[#064929]">{4.6}</Text>
+                          <Text className="text-[#064929]" style={{fontFamily: 'SemiBold'}}>{4.6}</Text>
                       </View>
                       <View className="flex-row items-center space-x-1">
                         <FontAwesome6 name='location-dot' size={18} color={'gray'} />
-                          <Text className="text-xs text-gray-500">Nearby . {vendor?.address}</Text>
+                          <Text className="text-xs text-gray-500" style={{fontFamily: 'Regular'}}>Nearby . {vendor?.address}</Text>
                       </View>
 
                       </View>

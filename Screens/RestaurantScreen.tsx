@@ -72,39 +72,39 @@ const RestaurantScreen = ({ navigation, route }: any) => {
                 className="w-full h-56 bg-gray-300 p-4"
             />
             <TouchableOpacity onPress={navigation.goBack} className="absolute top-14 left-5 p-2 bg-gray-100 rounded-full">
-                <AntDesign name='arrowleft' color="#00cc88" size={18} />
+                <AntDesign name='arrowleft' color="#064929" size={18} />
             </TouchableOpacity>
         </View>
         <View className="bg-white">
             <View className="px-4 pt-4">
-                <Text className="text-3xl font-bold">{vendor?.name}</Text>
+                <Text className="text-2xl" style={{fontFamily: 'Bold'}}>{vendor?.name}</Text>
                 <View className="flex-row space-x-2 my-1">
                     <View className="flex-row items-center space-x-1">
                         <AntDesign name='star' size={18} color={'green'} />
-                        <Text className="text-green-500">4.6</Text>
+                        <Text className="text-[#064929]" style={{fontFamily: 'Regular'}}>4.6</Text>
                     </View>
                    
                     <View className="flex-row items-center space-x-1">
                         <FontAwesome6 name='location-dot' size={18} color={'gray'} />
                         <Text className="text-xs text-gray-500">
-                            <Text className="text-green-500">Nearby . {vendor?.address}</Text>
+                            <Text className="text-[#064929]" style={{fontFamily: 'Regular'}}>Nearby . {vendor?.address}</Text>
                         </Text>
                     </View>
 
                 </View>
-                <Text className="text-gray-500 mt-2 pb-4">{vendor?.description}</Text>
+                <Text className="text-gray-500 mt-2 pb-4" style={{fontFamily: 'Regular'}}>{vendor?.description}</Text>
             </View>
             <TouchableOpacity className="flex-row items-center space-x-2 p-4 border-y border-gray-300">
                 {/* <QuestionMarkCircleIcon color="gray" opacity={0.6} size={20} /> */}
                 <AntDesign name='questioncircleo' size={18} color={'gray'} />
-                <Text className="pl-2 flex-1 text-md font-bold">
+                <Text className="pl-2 flex-1 text-md" style={{fontFamily: 'Bold'}}>
                     Have a food allergy?
                 </Text>
-                <Entypo name='chevron-right' size={18} color={'#00cc88'} />
+                <Entypo name='chevron-right' size={18} color={'#064929'} />
 
             </TouchableOpacity>
             <View className="pb-36">
-                <Text className="px-4 pt-5 mb-3 font-bold text-xl">
+                <Text className="px-4 pt-5 mb-3 text-xl" style={{fontFamily: 'SemiBold'}}>
                     Menu
                 </Text>
                 {
