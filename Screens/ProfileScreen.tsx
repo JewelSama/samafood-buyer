@@ -97,10 +97,10 @@ const ProfileScreen = ({ navigation }: any) => {
 						</View>
 
 						<View className='mt-4 space-y-4'>
-							<ListItem icon={<MaterialIcons name="person-outline" color={'#121212'} size={22} />} title="Personal Information" subtext="Phone Number, Email" screenName="RiderInfo" />
-							<ListItem icon={<AntDesign name="setting" color={'#121212'} size={22} />} title="Settings" subtext="Notification, Security, Theme, Language" screenName="RiderSettings" />
-							<ListItem icon={<AntDesign name="question" color={'#121212'} size={22} />} title="About Afriride" subtext="Terms and conditions, Privacy Policy" screenName="AboutScreen" />
-							<ListItem icon={<Feather name="phone" color={'#121212'} size={22} />} title="Contact Support" subtext="Customer Service care support" screenName={'Contact Support'} />
+							<ListItem icon={<MaterialIcons name="person-outline" color={'#121212'} size={22} />} title="Personal Information" subtext="Phone Number, Address, Email etc." screenName="UpdateProfile" />
+							<ListItem icon={<AntDesign name="setting" color={'#121212'} size={22} />} title="Settings" subtext="Notification, Security, Theme, Language" screenName="" />
+							<ListItem icon={<AntDesign name="question" color={'#121212'} size={22} />} title="About Afriride" subtext="Terms and conditions, Privacy Policy" screenName="" />
+							<ListItem icon={<Feather name="phone" color={'#121212'} size={22} />} title="Contact Support" subtext="Customer Service care support" screenName={''} />
 
 							<TouchableOpacity onPress={Logout} className='flex flex-row space-x-4 items-center' style={{width: 342, height: 54, paddingVertical: 8, paddingHorizontal: 10}}>
 								<View>
