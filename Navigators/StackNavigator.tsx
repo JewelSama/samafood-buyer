@@ -18,7 +18,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Restaurant" component={RestaurantScreen} />
         <Stack.Screen name="Basket" component={BasketScreen} 
-            options={{ presentation: "modal" , headerShown: false }}
+            options={{ presentation: "fullScreenModal" , headerShown: false }}
         />
         <Stack.Screen name="PreparingOrderScreen" component={PreaparingOrderScreen} 
           options={{presentation: "fullScreenModal", headerShown:false}}
