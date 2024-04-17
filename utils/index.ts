@@ -13,5 +13,5 @@ export function dateFormatter(x = ''){
 }
 
 export function dateTimeFormatter(x = ''){
-    return x === null ? '' : dayjs(x).format('dddd DD MMMM YYYY @ hh:mm A');
+    return x === null ? '' : dayjs(x).format('ddd DD MMMM YYYY. hh:mm A');
 }

@@ -7,24 +7,17 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { VendorMenuAPI, baseURL } from '../endpoints'
 import { AppContext } from '../Providers/AppProvider'
+import { useCart } from '../Providers/CartProvider'
 
 
 const RestaurantScreen = ({ navigation, route }: any) => {
+    // @ts-ignore
+    const { cartItems, removeAllFromCart } = useCart();
+
     const [menus, setMenus] = useState([])
     const { vendor } = route.params;
     const { user } = useContext<any>(AppContext);
     const [ loading, setLoading ] = useState(false)
-
-    // const hhh = 'https://img.freepik.com/free-vector/simple-corn-cartoon_1308-124847.jpg'
-    // const dishes = [
-    //     {
-    //         id: 1,
-    //         name: 'Jollof rice',
-    //         short_description: "Sweet and tasty jollof rice",
-    //         price: '1500',
-    //         image: hhh
-    //     }
-    // ]
 
 
 
@@ -32,6 +25,19 @@ const RestaurantScreen = ({ navigation, route }: any) => {
         navigation.setOptions({
             headerShown: false
         })
+    }, [])
+
+    useEffect(() => {
+        console.log("cartItems.length ", cartItems.length)
+        if(cartItems.length < 0){
+            return;
+        } else {
+            for(let i = 0; i < cartItems.length; i++){
+                // @ts-ignore
+                removeAllFromCart(cartItems[i].id)
+            // console.log("cartItems : ", cartItems)
+            }
+        }
     }, [])
 
     useEffect(() => {
@@ -49,7 +55,7 @@ const RestaurantScreen = ({ navigation, route }: any) => {
           if(resp?.errors){
             return alert(resp?.message)
           }
-          console.log(resp)
+        //   console.log(resp)
           setMenus(resp?.data); 
         })
         .catch(err => {
