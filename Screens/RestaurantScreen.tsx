@@ -19,6 +19,8 @@ const RestaurantScreen = ({ navigation, route }: any) => {
     const { user } = useContext<any>(AppContext);
     const [ loading, setLoading ] = useState(false)
 
+    console.log("vendor", vendor.id)
+
 
 
     useLayoutEffect(() => {
@@ -28,7 +30,7 @@ const RestaurantScreen = ({ navigation, route }: any) => {
     }, [])
 
     useEffect(() => {
-        console.log("cartItems.length ", cartItems.length)
+        // console.log("cartItems.length ", cartItems.length)
         if(cartItems.length < 0){
             return;
         } else {
@@ -69,7 +71,8 @@ const RestaurantScreen = ({ navigation, route }: any) => {
 
   return (
     <>
-    <BasketIcon />
+    {/* @ts-ignore */}
+    <BasketIcon vendor_id={vendor.id} />
 
     <ScrollView className='bg-white'>
         <View className="relative">
