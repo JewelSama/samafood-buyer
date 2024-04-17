@@ -33,7 +33,7 @@ const RegisterScreen = ( {navigation}: any ) => {
 	}
 
   const formData = {
-    'username': username.trim(),
+    'username': username,
     'email': email.trim(),
     'address': address.trim(),
     'phone_number': phone.trim(),
