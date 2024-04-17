@@ -1,23 +1,27 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { CartContext, useCart } from '../Providers/CartProvider'
 
 const BasketIcon = () => {
   const navigation: any = useNavigation()
-    // const items = useSelector(selectBasketItems)
-    // const basketTotal = useSelector(selectBasketTotal)
+  // @ts-ignore
+    const { totalCartItems, cartItems, totalAmount } = useCart();
     const [items, setItems] = useState([5]) 
+    console.log('Cart: ', cartItems)
 
-    if(items.length === 0) return null;
+
+
+    if(totalCartItems === 0) return null;
 
   return (
     <View className="absolute w-full bottom-10 z-50">
-      <TouchableOpacity onPress={() => navigation.navigate('Basket')} className="bg-[#00cc88] mx-5 p-4 rounded-lg flex-row items-center space-x-1">
-        <Text className="text-white font-extrabold text-lg bg-[#01A296] py-1 px-2">
-            5
+      <TouchableOpacity onPress={() => navigation.navigate('Basket')} className="bg-[#064929] mx-5 p-4 rounded-lg flex-row items-center space-x-1">
+        <Text className="text-white font-extrabold text-lg bg-[#0f1e17] py-1 px-2">
+            {totalCartItems}
         </Text>
-        <Text className="flex-1 text-white font-extrabold text-lg text-center">View Basket</Text>
-        <Text className="text-lg text-white font-extrabold">₦2800</Text>
+        <Text className="flex-1 text-white font-extrabold text-lg text-center">View Cart</Text>
+        <Text className="text-lg text-white font-extrabold">₦{totalAmount}</Text>
       </TouchableOpacity>
     </View>
   )
