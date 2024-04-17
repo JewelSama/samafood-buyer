@@ -1,16 +1,36 @@
 // @ts-nocheck
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native' 
 import { FontAwesome } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useCart } from '../Providers/CartProvider'
+import  { Paystack , paystackProps}  from 'react-native-paystack-webview';
+import { CreateOrderAPI, PaystackKey } from '../endpoints'
+import { AppContext } from '../Providers/AppProvider'
 
 
 
-const BasketScreen = ({ navigation }: any) => {
+
+const BasketScreen = ({ navigation, route }: any) => {
+	const paystackWebViewRef = useRef<paystackProps.PayStackRef>(); 
+  const { user } = useContext<any>(AppContext)
   const { totalCartItems, cartItems, totalAmount, removeFromCart } = useCart();
-    // console.log('Cartit: ', baseURL+'/'+cartItems[0]?.image)
+  
+  const { vendor_id } = route.params;
+  // console.log('vendor_id: ', vendor_id)
+
+  const items = cartItems.map(item => {
+      return {
+        "vendor_id": vendor_id,
+        "menu_id": item.id,
+        'quantity': item.quantity,
+        "price": item.price
+      }
+  })
+  
+console.log("itemssss ", items)
+
 
     const handleRemoveFromCart = (id) => {
       removeFromCart(id);
@@ -87,11 +107,55 @@ const BasketScreen = ({ navigation }: any) => {
             </Text>
           </View>
 
-          <TouchableOpacity disabled={cartItems.length < 1} onPress={() => navigation.navigate("PreparingOrderScreen")} className={`rounded-lg ${cartItems.length < 1 ? 'bg-gray-400' : 'bg-[#064929]'} p-4`}>
+          <TouchableOpacity disabled={cartItems.length < 1} onPress={()=> paystackWebViewRef?.current?.startTransaction()} className={`rounded-lg ${cartItems.length < 1 ? 'bg-gray-400' : 'bg-[#064929]'} p-4`}>
             <Text className="text-center text-white text-lg font-bold">Place Order</Text>
           </TouchableOpacity>
 
         </View> 
+        <Paystack
+				paystackKey={PaystackKey}
+				billingEmail={user?.email}
+				billingName={user?.username}
+				amount={totalAmount + 500}
+				// activityIndicatorColor={"#064929"}
+				onCancel={(e) => {
+				// handle response here
+					alert('Transaction cancelled.');
+				}}
+				onSuccess={(res) => {
+          setTimeout(() => {
+            console.log(res.data?.transactionRef?.trxref)
+
+            const data = {
+              "trx_ref": res.data?.transactionRef?.trxref,
+              "delivery_address": user?.address,
+              "items": items
+            }
+        
+            fetch(`${CreateOrderAPI}`, {
+              method: 'POST',
+              headers: new Headers({
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${user?.token}`,
+                'Content-Type': 'application/json'
+              }),
+              body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(resp => {
+              if(resp?.errors){
+                return alert(resp?.message)
+              }
+              console.log("resp", resp);
+              navigation.navigate('PreparingOrderScreen')
+          })
+
+        }, 1000)
+          
+				}}
+				// @ts-ignore
+				ref={paystackWebViewRef}
+			/>
 
       </View> 
     </SafeAreaView>
