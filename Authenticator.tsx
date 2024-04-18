@@ -24,6 +24,7 @@ const Authenticator = () => {
 		  	console.log(err);
 		})
 	}, []);
+	console.log("userrbbbb: ", !user)
 
 	if (loading) {
 		return (
@@ -31,10 +32,14 @@ const Authenticator = () => {
 				<ActivityIndicator size="large" color={"#064929"} />
 			</View>
 		)
+	} else if (!user) {
+		return <AuthStack />
+	} else {
+		return <StackNavigator />
 	}
 
-	if(user !== null && user !== undefined) return <StackNavigator />;
-	else return <AuthStack />;
+	// if(user !== null && user !== undefined) return <StackNavigator />;
+	// else return <AuthStack />;
 }
 
 export default Authenticator
