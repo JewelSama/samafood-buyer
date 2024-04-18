@@ -14,7 +14,7 @@ const DeliveryScreen = () => {
     // const restaurant = useSelector(selectRestaurant)
 
   return (
-    <SafeAreaView className="bg-[#00ccbb] flex-1">
+    <SafeAreaView className="bg-[#064929] flex-1">
       <View className="z-50">
 
         <View className="flex-row justify-between items-center p-5">
@@ -22,7 +22,7 @@ const DeliveryScreen = () => {
                 {/* <XIcon color="white" size={30} /> */}
               <FontAwesome name='times' color="white" size={30} />
             </TouchableOpacity>
-            <Text className="font-light text-lg text-white">Order Help</Text>
+            <Text className="text-lg text-white" style={{fontFamily: 'Regular'}}>Order Help</Text>
       </View>
 
         <View className="bg-white mx-5 my-2 rounded-md p-6 z-50 shadow-md" style={{shadowColor: '#000',
@@ -32,8 +32,8 @@ const DeliveryScreen = () => {
             elevation: 4,}}>
             <View className="flex-row justify-between">
                 <View>
-                    <Text className="text-lg text-gray-400">Estimated Arrival</Text>
-                    <Text className="text-4xl font-bold">45-55 Minutes</Text>
+                    <Text className="text-lg text-gray-400" style={{fontFamily: 'SemiBold'}}>Estimated Arrival</Text>
+                    <Text className="text-2xl" style={{fontFamily: 'Bold'}}>20-50 Minutes</Text>
                 </View>
                 <Image 
                     source={{uri: "https://links.papareact.com/fls"}}
@@ -43,8 +43,8 @@ const DeliveryScreen = () => {
             </View>
             {/* @ts-ignore */}
             <Progress.Bar size={30} color="#00ccbb" indeterminate={true} />
-               <Text className="mt-3 text-gray-500">
-                    Your order at Chillout is being prepared 
+               <Text className="mt-3 text-gray-500" style={{fontFamily: 'Regular'}}>
+                    Your order is being prepared 
                </Text>
         </View>
 
@@ -76,12 +76,12 @@ const DeliveryScreen = () => {
             className="h-12 w-12 bg-gray-300 rounded-full ml-5"
         />
         <View className="flex-1">
-            <Text className="text-lg">
-                Jewel~Sama
+            <Text className="text-lg" style={{fontFamily: 'SemiBold'}}>
+                SamaFood
             </Text>
-            <Text className="text-gray-400">Your delivery guy</Text>
+            <Text className="text-gray-400" style={{fontFamily: 'Regular'}}>Your delivery is on it's way</Text>
         </View>
-        <Text className="text-[#00ccbb] text-lg mr-5 font-bold">Call</Text>
+        {/* <Text className="text-[#064929] text-lg mr-5 font-bold">Call</Text> */}
       </View>
     </SafeAreaView>
   )
