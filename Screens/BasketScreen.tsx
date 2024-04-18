@@ -123,7 +123,7 @@ console.log("itemssss ", items)
 					alert('Transaction cancelled.');
 				}}
 				onSuccess={(res) => {
-          setTimeout(() => {
+          // setTimeout(() => {
             console.log(res.data?.transactionRef?.trxref)
 
             const data = {
@@ -150,7 +150,7 @@ console.log("itemssss ", items)
               navigation.navigate('PreparingOrderScreen')
           })
 
-        }, 1000)
+        // }, 1000)
           
 				}}
 				// @ts-ignore

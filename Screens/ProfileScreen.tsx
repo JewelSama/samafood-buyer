@@ -58,7 +58,7 @@ const ProfileScreen = ({ navigation }: any) => {
 			<View className='px-5 h-full'>
 				<View className='flex flex-row pb-2 justify-between items-center mt-1'>
                     <TouchableOpacity onPress={navigation.goBack} className="p-2 bg-white rounded-full">
-                        <AntDesign name='arrowleft' color="#00cc88" size={20} />
+                        <AntDesign name='arrowleft' color="#064929" size={20} />
                     </TouchableOpacity>
 					<Text className="text-xl" style={{fontFamily: 'Bold'}}>My Profile</Text>
 
