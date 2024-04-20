@@ -23,7 +23,7 @@ const Order = ({ order }: any) => {
           )
         }
         {
-          order.status === "completed" && (
+          order.status === "accepted" && (
             <Text style={{fontFamily: 'Regular'}} className='text-green-500'>{order.status.toUpperCase()}</Text>
           )
         }
