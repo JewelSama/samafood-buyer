@@ -131,6 +131,7 @@ console.log("itemssss ", items)
               "delivery_address": user?.address,
               "items": items
             }
+            console.log('ITEMS: ', items);
         
             fetch(`${CreateOrderAPI}`, {
               method: 'POST',
